@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import { TransportOptions } from 'nodemailer'
 
 export default {
     host: process.env.MAIL_HOST,
@@ -7,4 +8,4 @@ export default {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS
     }
-}
+} as TransportOptions
