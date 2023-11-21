@@ -9,6 +9,7 @@ import { BullAdapter } from '@bull-board/api/bullAdapter';
 const app: Express = express()
 
 app.use(express.json())
+
 const serverAdapter = new ExpressAdapter();
 serverAdapter.setBasePath('/admin/queue');
 

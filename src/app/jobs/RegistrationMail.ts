@@ -20,7 +20,7 @@ export default {
 
         await Mail.sendMail({
             from: 'Joao <joaodeus400@gmail.com>',
-            to: `${name} ${email}>`,
+            to: `Joao <joaodeus400@gmail.com>`,
             subject: 'Cadastro de user',
             html: `Olá ${name}, bem vindo a DIO`
         })
