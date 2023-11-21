@@ -1,23 +1,22 @@
 import Mail from "../../lib/Mail"
 
 interface User {
-    user: {
-        name: string
-        email: string
-    }
+    name: string
+    email: string
 }
 
 export default {
     ket: 'RegistrationMail',
     options: {
-
+        delay: 5000,
+        priority: 3
     },
-    async handle({ data }: {[key: string]: string | object }): Promise<void> {
-        const { user } = data as User
+    async handle({ data }: { [key: string]: string | object }): Promise<void> {
+        const { name, email } = data as User
 
         await Mail.sendMail({
             from: 'Joao <joaodeus400@gmail.com>',
-            to: `${user.name} ${user.email}>`,
+            to: `${name} ${email}>`,
             subject: 'Cadastro de user',
             html: `Olá ${name}, bem vindo a DIO`
         })
