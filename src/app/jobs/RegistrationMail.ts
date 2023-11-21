@@ -5,13 +5,17 @@ interface User {
     email: string
 }
 
+interface Data {
+    data: Object
+}
+
 export default {
-    ket: 'RegistrationMail',
+    key: 'RegistrationMail',
     options: {
         delay: 5000,
-        priority: 3
+        priority: 3,
     },
-    async handle({ data }: { [key: string]: string | object }): Promise<void> {
+    async handle({ data }: Data) {
         const { name, email } = data as User
 
         await Mail.sendMail({
