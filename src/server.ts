@@ -1,18 +1,21 @@
 import 'dotenv/config'
 import express, { Express } from 'express'
-import BullBoard from 'bull-board'
 import UserController from './app/controllers/UserController'
 import { ExpressAdapter } from '@bull-board/express'
-import Queuee from './lib/Queue'
+import Queue from './lib/Queue'
+import { createBullBoard } from '@bull-board/api'
+import { BullAdapter } from '@bull-board/api/bullAdapter';
 
 const app: Express = express()
 
 app.use(express.json())
 const serverAdapter = new ExpressAdapter();
-serverAdapter.setBasePath('/admin/queues');
+serverAdapter.setBasePath('/admin/queue');
 
-
-BullBoard.createBullBoard(Queuee.queues.map((queue: { bull: any }) => queue.bull))
+createBullBoard({
+    queues: Queue.queues.map((queue: { bull: any }) => new BullAdapter(queue.bull)),
+    serverAdapter,
+})
 app.post('/users', UserController.store)
 
 app.use('/admin/queue', serverAdapter.getRouter())
