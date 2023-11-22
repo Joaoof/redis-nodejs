@@ -1,8 +1,10 @@
 import Mail from "../../lib/Mail"
 
 interface User {
-    name: string
-    email: string
+    user: {
+        name: string
+        email: string
+    }
 }
 
 interface Data {
@@ -12,17 +14,28 @@ interface Data {
 export default {
     key: 'RegistrationMail',
     options: {
-        delay: 5000,
-        priority: 3,
+        delay: 50000,
+        priority: 10,
+        repeat: {
+            every: 1,
+            limit: 100
+        },
+        lifo: true
     },
     async handle({ data }: Data) {
-        const { name, email } = data as User
+        const { user } = data as User       
 
+        try {
         await Mail.sendMail({
-            from: 'Joao <joaodeus400@gmail.com>',
-            to: `Joao <joaodeus400@gmail.com>`,
-            subject: 'Cadastro de user',
-            html: `Olá ${name}, bem vindo a DIO`
-        })
+              from: 'Joao <joaodeus400@gmail.com>',
+              to: `${user.name} <${user.email}>`,
+              subject: 'Cadastro de user',
+              html: `Olá ${user.name}, bem vindo a DIO`
+            })
+
+          } catch (error) {
+            console.error('Erro ao enviar e-mail:', error);
+          }      
+          
     }
 }

@@ -15,11 +15,9 @@ export default {
             name,
             email,
             password: generatePassword(15, false )
-        }
+        }  
 
-        await Queue.add('RegistrationMail', {
-            user
-        })
+        await Queue.add('RegistrationMail', { user })
 
         return res.json(user)
     }

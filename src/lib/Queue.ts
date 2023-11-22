@@ -8,13 +8,13 @@ const queues = Object.values(jobs).map(job => ({
     name: job.key,
     handle: job.handle,
     options: job.options
-}))
+})) 
 
 
-export default {
+export  default {
     queues,
-    add(name: string, data: Object) {
-        const queue = this.queues.find((queue: { name: string; }) => queue.name === name)
+    add(name: string, data: any) {
+        const queue = this.queues.find(queue => queue.name === name)
 
         return queue?.bull.add(data, queue.options )
     },
@@ -23,7 +23,7 @@ export default {
             queue.bull.process(queue.handle)
 
             queue.bull.on('failed', (job: Job, err: Error) => {
-                console.log('Job failed');
+                console.log('Job failed', queues.keys, job.data);
                 console.log(err);
             })
         })
